@@ -9,8 +9,7 @@
 #include <errno.h>      /* Declares errno and defines error constants */
 #include <string.h>     /* Commonly used string-handling functions */
 #include "error_functions.h"  /* Declares our error-handling functions */
-//#include "get_num.h" 
-/* Declares our functions for handling numeric arguments (getInt(), getLong()) */
+#include "get_num.h"    /* Declares our functions for handling numeric arguments (getInt(), getLong()) */
                 
 
 typedef enum { FALSE, TRUE } Boolean;
