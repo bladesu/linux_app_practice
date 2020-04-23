@@ -1,6 +1,6 @@
 include ../Makefile.inc
 
-ALL = copy
+ALL = copy seek_io
 
 all : ${ALL}
 
