@@ -121,7 +121,7 @@ int main(int argc, char *argv[], char *env[])
     for (int i = 0; i < n_read; i++)
     {
       if (show_binary)
-        printf("%0 2x ", buff[i]);
+        printf("%02x ", buff[i]);
       else
         printf("%c", isprint(buff[i]) ? buff[i] : '?');
     }
