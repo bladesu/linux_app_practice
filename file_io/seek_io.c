@@ -18,7 +18,7 @@ int main(int argc, char *argv[], char *env[])
     usageErr("%s -f file_name {-r bytes |-w string|-o offset} -x (show in hexadecimal format)...\n", argv[0]);
   }
   int e_status;
-  size_t r_st, o_st, w_st;
+  size_t r_st = 0, o_st = 0, w_st = 0;
   char *w_char;
   char *file_name;
   unsigned char *buff = NULL;
