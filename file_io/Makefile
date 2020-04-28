@@ -1,6 +1,6 @@
 include ../Makefile.inc
 
-ALL = copy seek_io tee cp task_create_large_file
+ALL = copy seek_io tee cp task_create_large_file task_oappend_seek
 
 all : ${ALL}
 
