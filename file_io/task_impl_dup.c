@@ -17,8 +17,15 @@ void check(int fd)
         errno = EBADF;
 }
 
+void check_old(int fd)
+{
+    if (fcntl(fd, F_GETFL))
+        errno = EBADF;
+}
+
 int dup(int old)
 {
+    check(old);
     int fd = fcntl(old, F_DUPFD);
     check(fd);
     return fd;
@@ -26,6 +33,7 @@ int dup(int old)
 
 int dup2(int old, int new)
 {
+    check(old);
     int fd = fcntl(old, F_DUPFD, old);
     check(fd);
     return fd;
