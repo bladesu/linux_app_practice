@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <assert.h>
+#include <fcntl.h>
 
 int main(int argc, char *argv[], char *env[])
 {
@@ -59,11 +60,31 @@ int main(int argc, char *argv[], char *env[])
         printf("Fail to lseek for fd:%d", fd2);
         goto fail;
     }
-
+    // check offset
     if (offset1 == offset2)
-        printf("The offset in fd:%d and in fd:%d are the same.", fd1, fd2);
+        printf("The offset in fd:%d and in fd:%d are the same.\n", fd1, fd2);
     else
-        printf("The offset in fd:%d and in fd:%d are different.", fd1, fd2);
+        printf("The offset in fd:%d and in fd:%d are different.\n", fd1, fd2);
+
+    // check open file status:
+    int flag1 = fcntl(fd1, F_GETFL);
+    if (flag1 == -1)
+    {
+        printf("Fail to get file staus flag by fcntl to fd=%d\n", fd1);
+        goto fail;
+    }
+    int flag2 = fcntl(fd2, F_GETFL);
+    if (flag2 == -1)
+    {
+        printf("Fail to get file staus flag by fcntl to fd=%d\n", fd2);
+        goto fail;
+    }
+
+    if (flag1 == flag2)
+        printf("The file status in fd:%d and in fd:%d are the same.\n", fd1, fd2);
+    else
+        printf("The file status in fd:%d and in fd:%d are different.\n", fd1, fd2);
+
 
     process_status = EXIT_SUCCESS;
     goto final;
