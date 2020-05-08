@@ -1,6 +1,6 @@
 # Makefile to build all programs in all subdirectories
 
-BUILD_DIRS = lib file_io 
+BUILD_DIRS = lib file_io process 
 
 all: 	
 	@ echo ${BUILD_DIRS}
