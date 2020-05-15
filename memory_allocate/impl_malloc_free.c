@@ -259,9 +259,6 @@ void my_free(void *__ptr)
     // case 3
     // [ free block i ]  [ block to join ]|  [ free block i+1 ]
     //                   ^_block          ^end
-    // case 4
-    // [ free block i ]  ...  [ free block i+1 ] [ block to join ]|
-    //                                           ^_block          ^end
     MBLOCK *_block = (MBLOCK *)((size_t *)__ptr - 1);
     void *end = (char *)__ptr + _block->length;
     MBLOCK *_current = __HEAD;
@@ -296,15 +293,22 @@ void my_free(void *__ptr)
             if (_current_end == _block)
             {
                 _current->length = _current->length + sizeof(size_t) + _block->length;
+                // merge following block but not for last one.
+                if (end == _current->next && _current->next->next != NULL)
+                {
+                    _current->length = _current->length + sizeof(size_t) + _current->next->length;
+                    _current->next = _current->next->next;
+                }
                 return;
             }
             else
             {
                 _block->last = _current;
-                if (end == _current->next)
+                // merge following block but not for last one. 
+                if (end == _current->next && _current->next->next != NULL)
                 {
-                    _block->next = _current->next->next;
                     _block->length = _block->length + sizeof(size_t) + _current->next->length;
+                    _block->next = _current->next->next;
                 }
                 else
                 {
@@ -317,19 +321,6 @@ void my_free(void *__ptr)
         }
         _current = _current->next;
     } while (_block != NULL);
-
-    // case 4
-    void *_current_end = (char *)_current + sizeof(size_t) + _current->length;
-    if (_block == _current_end)
-    { // adjacent
-        _current->length = _current->length + sizeof(size_t) + _block->length;
-    }
-    else
-    {
-        _current->next = _block;
-        _block->last = _current;
-        _block->next = NULL;
-    }
 }
 
 int main(void)
