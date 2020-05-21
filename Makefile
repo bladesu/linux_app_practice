@@ -1,6 +1,6 @@
 # Makefile to build all programs in all subdirectories
 
-BUILD_DIRS = lib file_io process memory_allocate
+BUILD_DIRS = lib file_io process memory_allocate users_groups
 
 all: 	
 	@ echo ${BUILD_DIRS}
